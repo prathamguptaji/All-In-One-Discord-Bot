@@ -1,0 +1,7 @@
+const {Events,PermissionFlagsBits,EmbedBuilder}=require('discord.js');const {guild,user,save}=require('../lib/store');const {log}=require('../lib/utils');
+const recent=new Map();
+module.exports={name:Events.MessageCreate,async execute(client,m){if(!m.guild||m.author.bot)return;const g=guild(m.guild.id);
+  if(g.automodEnabled&&!m.member?.permissions.has(PermissionFlagsBits.ManageMessages)){const key=`${m.guild.id}:${m.author.id}`,now=Date.now(),arr=(recent.get(key)||[]).filter(t=>now-t<7000);arr.push(now);recent.set(key,arr);if(arr.length>=6){if(m.deletable)await m.delete().catch(()=>{});if(m.member?.moderatable)await m.member.timeout(60000,'Automod: message spam').catch(()=>{});await log(m.guild,`Automod triggered for ${m.author.tag} in ${m.channel}.`);return;}}
+  const d=user(`${m.guild.id}:${m.author.id}`);d.xp=(d.xp||0)+Math.floor(Math.random()*6)+8;let next=(d.level||0);while(d.xp>=(next+1)*100)next++;if(next>(d.level||0)){d.level=next;m.channel.send({embeds:[new EmbedBuilder().setColor(0xFEE75C).setTitle('Level Up!').setDescription(`Congrats ${m.author}, you reached **level ${next}**!`).setThumbnail(m.author.displayAvatarURL())]}).catch(()=>{});}save();
+  const custom=client.customResponses?.get(`${m.guild.id}:${m.content.toLowerCase()}`);if(custom)m.channel.send({embeds:[new EmbedBuilder().setColor(0x5865F2).setDescription(String(custom).slice(0,4000))]}).catch(()=>{});
+}};

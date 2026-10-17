@@ -1,0 +1,3 @@
+const {SlashCommandBuilder}=require('discord.js');const {user,save}=require('../../lib/store');
+const jobs=['helped a customer','fixed a server','built a website','moderated a community','wrote some code'];
+module.exports={category:'Economy',data:new SlashCommandBuilder().setName('work').setDescription('Work for some coins'),async execute(i){const d=user(`${i.guildId}:${i.user.id}`),now=Date.now(),wait=60000-(now-d.lastWork);if(wait>0)return i.reply({content:`You can work again in ${Math.ceil(wait/1000)} seconds.`,ephemeral:true});const amount=30+Math.floor(Math.random()*71);d.balance+=amount;d.lastWork=now;save();await i.reply(`You ${jobs[Math.floor(Math.random()*jobs.length)]} and earned **${amount} coins**.`);}};

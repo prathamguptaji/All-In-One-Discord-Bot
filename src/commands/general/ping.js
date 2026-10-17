@@ -1,0 +1,2 @@
+const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
+module.exports={data:new SlashCommandBuilder().setName('ping').setDescription('Check bot and API latency'),async execute(i,c){const e=new EmbedBuilder().setColor(0x57F287).setTitle('Pong!').addFields({name:'WebSocket',value:`${c.ws.ping}ms`,inline:true},{name:'Round trip',value:`${Date.now()-i.createdTimestamp}ms`,inline:true});await i.reply({embeds:[e]});}};
