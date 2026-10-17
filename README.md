@@ -41,11 +41,11 @@ Before installing the bot, make sure you have:
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/YOUR_REPOSITORY.git
-cd YOUR_REPOSITORY
+git clone https://github.com/prathamguptaji/All-In-One-Discord-Bot
+cd /All-In-One-Discord-Bot
 ```
 
-Replace `YOUR_USERNAME` and `YOUR_REPOSITORY` with your GitHub username and repository name.
+
 
 ### 2. Install Dependencies
 
@@ -275,8 +275,6 @@ Keep new commands modular and follow the project's existing conventions.
 ## License
 
 No license is specified by this README.
-
-Before publishing the repository, add a `LICENSE` file describing how others may use, modify, and distribute your code.
 
 ## Credits
 
